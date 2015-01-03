@@ -85,6 +85,7 @@ upstream {{ $host }} {
 
 server {
 	server_name {{ $host }};
+        client_max_body_size 1024M;
 	rewrite ^(.*) https://{{ $host }}$1 permanent;
 }
 
@@ -104,6 +105,8 @@ server {
 
 	add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
 
+        client_max_body_size 1024M;
+
 	location / {
 		proxy_pass http://{{ $host }};
 	}
@@ -113,6 +116,7 @@ server {
 server {
 	server_name {{ $host }};
 
+        client_max_body_size 1024M;
 	location / {
 		proxy_pass http://{{ $host }};
 	}
@@ -127,6 +131,8 @@ server {
 	ssl_certificate /etc/nginx/certs/default.crt;
 	ssl_certificate_key /etc/nginx/certs/default.key;
 	{{ end }}
+
+        client_max_body_size 1024M;
 }
 
 {{ end }}
